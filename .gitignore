@@ -76,3 +76,7 @@ src/tags
 
 # backup stuff
 *~
+
+# IntelliJ IDEA stuff
+*.iml
+*.idea
