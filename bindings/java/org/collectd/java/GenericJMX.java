@@ -21,18 +21,16 @@
 
 package org.collectd.java;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
-
 import org.collectd.api.Collectd;
 import org.collectd.api.CollectdConfigInterface;
-import org.collectd.api.CollectdInitInterface;
 import org.collectd.api.CollectdReadInterface;
 import org.collectd.api.CollectdShutdownInterface;
-import org.collectd.api.OConfigValue;
 import org.collectd.api.OConfigItem;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class GenericJMX implements CollectdConfigInterface,
        CollectdReadInterface,

@@ -63,28 +63,12 @@ public class ValueList extends PluginData {
         _values.clear ();
     }
 
-    /**
-     * @deprecated Use {@link #getDataSet()} instead.
-     */
-    public List<DataSource> getDataSource() {
-        if (_ds == null)
-            return null;
-        return _ds.getDataSources ();
-    }
-
     public DataSet getDataSet () {
         return _ds;
     }
 
     public void setDataSet (DataSet ds) {
         _ds = ds;
-    }
-
-    /**
-     * @deprecated Use {@link #setDataSet(DataSet)} instead.
-     */
-    public void setDataSource(List<DataSource> dsrc) {
-        _ds = new DataSet (_type, dsrc);
     }
 
     /**
@@ -104,7 +88,7 @@ public class ValueList extends PluginData {
     public String toString() {
         StringBuffer sb = new StringBuffer(super.toString());
         sb.append("=[");
-        List<DataSource> ds = getDataSource();
+        List<DataSource> ds = getDataSet() != null ? getDataSet().getDataSources() : null;
         int size = _values.size();
         for (int i=0; i<size; i++) {
             Number val = _values.get(i);

@@ -18,6 +18,7 @@ EXTRA_DIST = org/collectd/api/CollectdConfigInterface.java \
 	     org/collectd/api/OConfigValue.java \
 	     org/collectd/api/PluginData.java \
 	     org/collectd/api/ValueList.java \
+	     org/collectd/coalesce/Coalesce.java \
 	     org/collectd/java/GenericJMXConfConnection.java \
 	     org/collectd/java/GenericJMXConfMBean.java \
 	     org/collectd/java/GenericJMXConfValue.java \
@@ -27,9 +28,11 @@ EXTRA_DIST = org/collectd/api/CollectdConfigInterface.java \
 java-build-stamp: org/collectd/api/*.java org/collectd/java/*.java
 	$(JAVAC) -d "." "$(srcdir)/org/collectd/api"/*.java
 	$(JAVAC) -d "." "$(srcdir)/org/collectd/java"/*.java
+	$(JAVAC) -d "." "$(srcdir)/org/collectd/coalesce"/*.java
 	mkdir -p .libs
 	$(JAR) cf .libs/collectd-api.jar "org/collectd/api"/*.class
 	$(JAR) cf .libs/generic-jmx.jar "org/collectd/java"/*.class
+	$(JAR) cf .libs/coalesce.jar "org/collectd/coalesce"/*.class
 	touch "$@"
 
 all-local: java-build-stamp
@@ -38,11 +41,14 @@ install-exec-local: java-build-stamp
 	mkdir -p "$(DESTDIR)$(pkgdatadir)/java"
 	$(INSTALL) -m 644 .libs/collectd-api.jar \
 		"$(DESTDIR)$(pkgdatadir)/java"
+	$(INSTALL) -m 644 .libs/coalesce.jar \
+	    "$(DESTDIR)$(pkgdatadir)/java"
 	$(INSTALL) -m 644 .libs/generic-jmx.jar \
 		"$(DESTDIR)$(pkgdatadir)/java"
 
 clean-local:
 	rm -f "org/collectd/api"/*.class
+	rm -f "org/collectd/coalesce"/*.class
 	rm -f "org/collectd/java"/*.class
 	rm -f .libs
 	rm -f "java-build-stamp"

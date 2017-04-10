@@ -335,6 +335,9 @@ static int fc_config_add_target (fc_target_t **targets_head, /* {{{ */
     *targets_head = t;
   }
 
+  DEBUG ("fc_config_add_target: Added target \"%s\",
+        ci->values[0].value.string)
+
   return (0);
 } /* }}} int fc_config_add_target */
 
@@ -383,7 +386,11 @@ static int fc_config_add_rule (fc_chain_t *chain, /* {{{ */
     if (strcasecmp ("Match", option->key) == 0)
       status = fc_config_add_match (&rule->matches, option);
     else if (strcasecmp ("Target", option->key) == 0)
+    {
+      DEBUG ("Adding target: \"%s\" to chain: \"%s\"",
+        option->name, chain->name);
       status = fc_config_add_target (&rule->targets, option);
+    }
     else
     {
       WARNING ("Filter subsystem: %s: Option `%s' not allowed "

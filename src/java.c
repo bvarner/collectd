@@ -2421,6 +2421,24 @@ static int cjni_config_callback (oconfig_item_t *ci) /* {{{ */
 
   oconfig_free (ci_copy);
 
+  // eagerly initialize a JVM, so that targets, matches, etc happen during the 'config' cycle, rather than
+  // during init().
+  cjni_shutdown();
+
+  if ((config_block == NULL) && (jvm == NULL))
+  {
+    ERROR ("java plugin: cjni_init: No configuration block for "
+        "the java plugin was found.");
+    return (-1);
+  }
+
+  if (config_block != NULL)
+  {
+    cjni_config_perform (config_block);
+    oconfig_free (config_block);
+    config_block = NULL;
+  }
+
   return (0);
 } /* }}} int cjni_config_callback */
 
@@ -3069,21 +3087,6 @@ static int cjni_shutdown (void) /* {{{ */
 static int cjni_init (void) /* {{{ */
 {
   JNIEnv *jvm_env;
-
-  if ((config_block == NULL) && (jvm == NULL))
-  {
-    ERROR ("java plugin: cjni_init: No configuration block for "
-        "the java plugin was found.");
-    return (-1);
-  }
-
-  if (config_block != NULL)
-  {
-
-    cjni_config_perform (config_block);
-    oconfig_free (config_block);
-    config_block = NULL;
-  }
 
   if (jvm == NULL)
   {
