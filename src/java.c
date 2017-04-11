@@ -120,6 +120,8 @@ static int cjni_match_target_destroy (void **user_data);
 static int cjni_match_target_invoke (const data_set_t *ds, value_list_t *vl,
     notification_meta_t **meta, void **user_data);
 
+static int cjni_shutdown (void);
+
 /* 
  * C to Java conversion functions
  */
