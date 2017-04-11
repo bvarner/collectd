@@ -388,7 +388,7 @@ static int fc_config_add_rule (fc_chain_t *chain, /* {{{ */
     else if (strcasecmp ("Target", option->key) == 0)
     {
       DEBUG ("Adding target: \"%s\" to chain: \"%s\"",
-        option->name, chain->name);
+        ci->values[0].value.string, chain->name);
       status = fc_config_add_target (&rule->targets, option);
     }
     else
